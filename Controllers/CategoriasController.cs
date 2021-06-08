@@ -30,11 +30,24 @@ namespace CursoMVC.Controllers
             return View(categoria);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var categoria = await _context.Categorias
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (categoria == null) return NotFound();
+            return View(categoria);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Descricao")] Categoria categoria)
         {
-            if (id != categoria.Id) return NotFound();
+
+            if (id != categoria.Id)
+                return NotFound();
 
             if (ModelState.IsValid)
             {
