@@ -28,6 +28,7 @@ namespace CursoMVC.Controllers
             if (id == null) return NotFound();
 
             var produto = await _context.Produtos
+            .Include(p => p.Categoria)
             .FirstOrDefaultAsync(p => p.Id == id);
 
             if (produto == null) return NotFound();
